@@ -1,5 +1,5 @@
-import { UsuarioController } from './../controller/UsuarioController';
-import { LancamentoController } from './../controller/LancamentoController';
+import { UsuarioController } from '../controller/UsuarioController';
+import { LancamentoController } from '../controller/LancamentoController';
 import { Router } from 'express';
 import { Lancamento } from '../entity/Lancamento';
 

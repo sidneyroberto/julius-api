@@ -1,4 +1,4 @@
-import { Usuario } from './../entity/Usuario';
+import { Usuario } from '../entity/Usuario';
 import { Router } from 'express';
 import { UsuarioController } from '../controller/UsuarioController';
 
