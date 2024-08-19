@@ -1,27 +1,35 @@
-import { getManager } from "typeorm";
+import { Repository } from "typeorm";
 import { Usuario } from "../entity/Usuario";
+import { AppDataSource } from "../data-source";
 
 export class UsuarioController {
+  private _repo: Repository<Usuario>;
 
-    async salvar(usuario: Usuario) {
-        const usuarioSalvo = await getManager().save(usuario);
-        return usuarioSalvo;
-    }
+  constructor() {
+    this._repo = AppDataSource.getRepository(Usuario);
+  }
 
-    async recuperarTodos() {
-        const usuarios = await getManager().find(Usuario);
-        return usuarios;
-    }
+  async salvar(usuario: Usuario) {
+    const usuarioSalvo = await this._repo.save(usuario);
+    return usuarioSalvo;
+  }
 
-    async recuperarPorId(id: number) {
-        const usuario = await getManager().findOne(Usuario, id);
-        return usuario;
-    }
+  async recuperarTodos() {
+    const usuarios = await this._repo.find();
+    return usuarios;
+  }
 
-    async recuperarLancamentosDoUsuario(id: number) {
-        const usuario = await getManager().findOne(Usuario, id, {
-            relations: ['lancamentos']
-        });
-        return usuario.lancamentos;
-    }
+  async recuperarPorId(id: number) {
+    const usuario = await this._repo.findOneBy({ id });
+    return usuario;
+  }
+
+  async recuperarLancamentosDoUsuario(id: number) {
+    const usuario = await this._repo.findOne({
+      where: { id },
+      relations: ["lancamentos"],
+    });
+
+    return usuario.lancamentos;
+  }
 }
